@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import ru.axtane.model.Person;
 
+import java.util.List;
+
 public class App
 {
     public static void main( String[] args ) {
@@ -16,17 +18,17 @@ public class App
         try {
             session.beginTransaction();
 
-            /*Person person = session.get(Person.class, 2);
-            person.setName("April");
-            person.setAge(27);
-            session.remove(person);*/
+            session.createQuery("update Person set name='Test' where name like 'T%'").executeUpdate();
+            session.createQuery("delete from Person where age<18").executeUpdate();
+            List<Person> list = session.createSelectionQuery("From Person Where name Like 'T%'", Person.class).getResultList();
+            List<Person> list1 = session.createSelectionQuery("From Person Where age<35", Person.class).getResultList();
 
-            Person person = new Person("Roxane", 16);
-            session.persist(person);
+            for (Person person : list1){
+                System.out.println(person);
+            }
 
             session.getTransaction().commit();
 
-            System.out.println(person.getId());
         }finally {
             sessionFactory.close();
         }
