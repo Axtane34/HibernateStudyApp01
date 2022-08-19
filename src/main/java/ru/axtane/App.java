@@ -16,11 +16,17 @@ public class App
         try {
             session.beginTransaction();
 
-            session.save(new Person("Tom", 20));
-            session.save(new Person("Bob", 22));
-            session.save(new Person("Mitch", 21));
+            /*Person person = session.get(Person.class, 2);
+            person.setName("April");
+            person.setAge(27);
+            session.remove(person);*/
+
+            Person person = new Person("Roxane", 16);
+            session.persist(person);
 
             session.getTransaction().commit();
+
+            System.out.println(person.getId());
         }finally {
             sessionFactory.close();
         }
