@@ -3,7 +3,9 @@ package ru.axtane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import ru.axtane.model.Director;
 import ru.axtane.model.Item;
+import ru.axtane.model.Movie;
 import ru.axtane.model.Person;
 
 import java.util.ArrayList;
@@ -14,7 +16,8 @@ public class App
 {
     public static void main( String[] args ) {
         Configuration configuration = new Configuration()
-                .addAnnotatedClass(Person.class).addAnnotatedClass(Item.class);
+                .addAnnotatedClass(Person.class).addAnnotatedClass(Item.class)
+                .addAnnotatedClass(Director.class).addAnnotatedClass(Movie.class);
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.getCurrentSession();
@@ -70,7 +73,41 @@ public class App
             //внутренний внешнему для кеша
             person.getItems().add(item);*/
 
+           /* Director director = session.get(Director.class, 1);
+            for (Movie movie : director.getMovies()){
+                System.out.println(movie.getDir().getName() + ", " + movie.getName() + ", " + movie.getYearOfProduction());
+            }*/
+
+            /*Movie movie = session.get(Movie.class, 4);
+            System.out.println(movie.getDir().getName() + ": " + movie.getName());*/
+
+            /*Director director = session.get(Director.class, 3);
+            Movie movie = new Movie("Aladdin", 2018, director);
+            session.persist(movie);
+            director.getMovies().add(movie);*/
+            /*for (Movie movie : director.getMovies()){
+                System.out.println(movie.getDir().getName() + ", " + movie.getName() + ", " + movie.getYearOfProduction());
+            }*/
+
+            /*Director director = new Director("Alfred Hitchcock", 1899, new ArrayList<>());
+            Movie movie = new Movie("Psycho", 1998, director);
+            session.persist(director);
+            session.persist(movie);*/
+
+            /*Movie aladdin = session.get(Movie.class, 12);
+            Director richie = aladdin.getDir();
+            richie.getMovies().remove(aladdin);
+
+            Director hitchcock = session.get(Director.class, 7);
+            aladdin.setDir(hitchcock);
+            hitchcock.getMovies().add(aladdin);*/
+
+            /*Director richie = session.get(Director.class, 3);
+            richie.getMovies().stream().map(Movie::getName).forEach(System.out::println);*/
+
+
             session.getTransaction().commit();
+
 
         }finally {
             sessionFactory.close();
