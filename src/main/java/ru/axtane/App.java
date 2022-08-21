@@ -105,6 +105,13 @@ public class App
             /*Director richie = session.get(Director.class, 3);
             richie.getMovies().stream().map(Movie::getName).forEach(System.out::println);*/
 
+            Person person = new Person("Test cascading", 31);
+
+            person.addItem(new Item("Test cascading item"));
+            person.addItem(new Item("Test cascading item1"));
+            person.addItem(new Item("Test cascading item2"));
+
+            session.persist(person);
 
             session.getTransaction().commit();
 
