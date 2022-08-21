@@ -15,13 +15,16 @@ public class App
         Configuration configuration = new Configuration()
                 .addAnnotatedClass(Person.class).addAnnotatedClass(Item.class)
                 .addAnnotatedClass(Director.class).addAnnotatedClass(Movie.class)
-                .addAnnotatedClass(Passport.class);
+                .addAnnotatedClass(Passport.class).addAnnotatedClass(Principal.class)
+                .addAnnotatedClass(School.class);
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.getCurrentSession();
 
         try {
             session.beginTransaction();
+
+
 
             session.getTransaction().commit();
         }finally {

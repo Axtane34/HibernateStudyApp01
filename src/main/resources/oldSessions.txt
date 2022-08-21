@@ -102,4 +102,24 @@
 
             session.remove(person);
 
+            Principal principal = session.get(Principal.class, 2);
+            System.out.println(principal.getSchool().getSchoolNumber());
+
+            School school = session.get(School.class, 1);
+            System.out.println(school.getPrincipal().getName());
+
+            Principal newPrincipal = new Principal("Anthony", 46);
+            newPrincipal.setSchool(new School(322));
+
+            School school = session.get(School.class, 5);
+            Principal principal = new Principal("Kavalli", 33);
+            principal.setSchool(school);
+            principal.setSchool(new School(2321));
+            session.persist(principal);
+
+            System.out.println(principal.getSchool().getSchoolNumber());
+
+
+
+
 
