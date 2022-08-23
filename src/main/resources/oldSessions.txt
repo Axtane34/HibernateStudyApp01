@@ -119,6 +119,40 @@
 
             System.out.println(principal.getSchool().getSchoolNumber());
 
+            Movie fightClub = new Movie("Fight club", 1999);
+                        Actor edwardNorton = new Actor("Edward Norton", 52);
+                        Actor bradPitt = new Actor("Brad Pitt", 59);
+
+                        fightClub.setActors(new ArrayList<>(List.of(edwardNorton, bradPitt)));
+                        edwardNorton.setMovies(new ArrayList<>(Collections.singletonList(fightClub)));
+                        bradPitt.setMovies(new ArrayList<>(Collections.singletonList(fightClub)));
+                        Director director = new Director("David Fincher", 59);
+                        director.setMovies(new ArrayList<>(Collections.singletonList(fightClub)));
+                        session.persist(director);
+                        fightClub.setDir(director);
+
+                        session.persist(fightClub);
+                        session.persist(edwardNorton);
+                        session.persist(bradPitt);
+
+                        Actor actor = session.get(Actor.class, 2);
+                        System.out.println(actor.getMovies());
+
+                        Movie movie = new Movie("Reservoir dog", 1992);
+                        Director director = new Director("G Richie", 55);
+                        director.setMovies(new ArrayList<>(Collections.singletonList(movie)));
+                        session.persist(director);
+                        movie.setDir(director);
+                        Actor actor = session.get(Actor.class, 2);
+                        movie.setActors(new ArrayList<>(Collections.singletonList(actor)));
+                        actor.getMovies().add(movie);
+                        session.persist(movie);
+
+                        Actor actor = session.get(Actor.class, 2);
+                        Movie movieToRemove = actor.getMovies().get(0);
+                        actor.getMovies().remove(movieToRemove);
+                        movieToRemove.getActors().remove(actor);
+
 
 
 

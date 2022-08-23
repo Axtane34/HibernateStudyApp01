@@ -2,6 +2,9 @@ package ru.axtane.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Objects;
+
 @Entity
 @Table(name = "movie")
 public class Movie {
@@ -16,6 +19,9 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "director_id", referencedColumnName = "director_id")
     private Director dir;
+
+    @ManyToMany(mappedBy = "movies")
+    private List<Actor> actors;
 
     public Movie() {
     }
@@ -61,5 +67,35 @@ public class Movie {
 
     public void setDir(Director dir) {
         this.dir = dir;
+    }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", yearOfProduction=" + yearOfProduction +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return id == movie.id && yearOfProduction == movie.yearOfProduction && Objects.equals(name, movie.name) && Objects.equals(dir, movie.dir);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, yearOfProduction, dir);
     }
 }

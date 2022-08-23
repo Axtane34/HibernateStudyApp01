@@ -16,19 +16,18 @@ public class App
                 .addAnnotatedClass(Person.class).addAnnotatedClass(Item.class)
                 .addAnnotatedClass(Director.class).addAnnotatedClass(Movie.class)
                 .addAnnotatedClass(Passport.class).addAnnotatedClass(Principal.class)
-                .addAnnotatedClass(School.class);
+                .addAnnotatedClass(School.class).addAnnotatedClass(Actor.class);
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
 
-        try {
+
+        try(sessionFactory) {
+            Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
 
 
             session.getTransaction().commit();
-        }finally {
-            sessionFactory.close();
         }
     }
 }
